@@ -1,9 +1,12 @@
+from datetime import datetime
 from app import db
 
 
 class Board(db.Model):
     prefix = db.Column(db.String(8), index=True, unique=True, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
+
+    threads = db.relationship('Thread', backref='board', lazy='dynamic')
 
     def __repr__(self):
         return '<Board %r>' % self.name
@@ -13,13 +16,19 @@ class Thread(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), index=True)
 
+    board_prefix = db.Column(db.String(8), db.ForeignKey('board.prefix'), nullable=False)
+    posts = db.relationship('Post', backref='thread')
+
     def __repr__(self):
         return '<Thread %r>' % self.title
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    message = db.Column(db.String(2048))
+    message = db.Column(db.Text)
+    datetime = db.Column(db.DateTime, default=datetime.utcnow)
+
+    thread_id = db.Column(db.Integer, db.ForeignKey('thread.id'), nullable=False)
 
     def __repr__(self):
         return '<Post %r>' % self.id
