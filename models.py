@@ -9,7 +9,7 @@ class Board(db.Model):
     threads = db.relationship('Thread', backref='board', lazy='dynamic')
 
     def __repr__(self):
-        return '<Board %r>' % self.name
+        return '<Board {}>'.format(self.name)
 
 
 class Thread(db.Model):
@@ -20,7 +20,7 @@ class Thread(db.Model):
     posts = db.relationship('Post', backref='thread')
 
     def __repr__(self):
-        return '<Thread %r>' % self.title
+        return '<Thread {} in {}>'.format(self.id, self.board)
 
 
 class Post(db.Model):
@@ -31,4 +31,4 @@ class Post(db.Model):
     thread_id = db.Column(db.Integer, db.ForeignKey('thread.id'), nullable=False)
 
     def __repr__(self):
-        return '<Post %r>' % self.id
+        return '<Post {} in {}>'.format(self.id, self.thread)
