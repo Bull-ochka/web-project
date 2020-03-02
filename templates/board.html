@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ board.prefix }}{% endblock %}
+
+{% block body %}
+
+Создать тред: <br>
+<form class="thread-maker" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+    Название треда:
+    {{ form.title }}
+  </p>
+  <p>
+    Сообщение:
+    {{ form.message }}
+  </p>
+  <p><input type="submit" value="Создать"></p>
+
+</form>
+
+Доска: {{ board.prefix }} - {{ board.name }} <br>
+Треды:
+{% for thread in board.threads %}
+  <br>
+  <a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a>
+{% else %}
+  Похоже, здесь нет ни одного треда!
+{% endfor %}
+
+{% endblock %}

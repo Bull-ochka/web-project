@@ -1,8 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <meta charset="utf-8">
-  <title>{{title}}</title>
+{% extends "base.html" %}
 
-  Привет!
+{% block title %}Главная{% endblock %}
 
-</html>
+{% block body %}
+
+Доски:
+{% for board in boards %}
+  <br>
+  <a href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a>
+{% else %}
+  Похоже, здесь нет ни одной доски!
+{% endfor %}
+
+{% endblock %}

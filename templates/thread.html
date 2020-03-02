@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ thread.board.prefix }} - {{ thread.id }}{% endblock %}
+
+{% block body %}
+
+{{ thread.title }}:
+{% for post in thread.posts %}
+  <br>
+  <p>{{ post.datetime }}: {{ post.message }}</p>
+{% else %}
+  Похоже, здесь нет ни одного поста!
+{% endfor %}
+
+{% endblock %}
