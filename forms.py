@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired
 
 
 class NewThreadForm(FlaskForm):
-    title = StringField('Тема', validators=[DataRequired()])
-    message = TextAreaField('Сообщение', validators=[DataRequired()])
+    title = StringField('Название треда: ', validators=[DataRequired()])
+    message = TextAreaField('Сообщение: ', validators=[DataRequired()])

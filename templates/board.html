@@ -8,11 +8,11 @@
 <form class="thread-maker" method="post">
   {{ form.hidden_tag() }}
   <p>
-    Название треда:
+    {{ form.title.label }}
     {{ form.title }}
   </p>
   <p>
-    Сообщение:
+    {{ form.message.label }}
     {{ form.message }}
   </p>
   <p><input type="submit" value="Создать"></p>
