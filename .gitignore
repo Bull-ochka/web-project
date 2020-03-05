@@ -3,6 +3,7 @@
 /Scripts
 /__pycache__
 /migrations
+/.idea
 
 *.pyc
 
