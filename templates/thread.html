@@ -11,5 +11,13 @@
 {% else %}
   Похоже, здесь нет ни одного поста!
 {% endfor %}
-
+<br>
+<form class="post-maker" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.message.label }}
+    {{ form.message }}
+  </p>
+  <p><input type="submit" value="Отправить"></p>
+</form>
 {% endblock %}
