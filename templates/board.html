@@ -5,21 +5,20 @@
 {% block body %}
 <div class ="container-fluid no-gutters">
   <div class="row">
-    Доска: {{ board.prefix }} - {{ board.name }}
+    <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
   </div>
 </div>
 
 <div class ="container-fluid no-gutters">
-Треды:
-{% for thread in board.threads %}
-  <div class="row">
-    <a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a>
-  </div>
-  {% else %}
-  Похоже, здесь нет ни одного треда!
-{% endfor %}
-
-</div>
+  <h3>Треды:</h3>
+    {% for thread in board.threads %}
+      <div class="row">
+        <h5><p><a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a></p></h5>
+      </div>
+    {% else %}
+      <h5>Похоже, здесь нет ни одного треда!</h5>
+    {% endfor %}
+<h5>
 <br>Создать тред: <br>
 <form class="thread-maker" method="post">
   {{ form.hidden_tag() }}
@@ -33,4 +32,6 @@
   </p>
   <p><input type="submit" value="Создать"></p>
 </form>
+</h5>
+</div>
 {% endblock %}

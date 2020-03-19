@@ -3,15 +3,18 @@
 {% block title %}{{ thread.board.prefix }} - {{ thread.id }}{% endblock %}
 
 {% block body %}
-
+<h4>
 {{ thread.title }}:
+</h4>
 {% for post in thread.posts %}
-  <br>
+<h5>
+<br>
   <p>{{ post.datetime }}: {{ post.message }}</p>
 {% else %}
   Похоже, здесь нет ни одного поста!
 {% endfor %}
 <br>
+
 <form class="post-maker" method="post">
   {{ form.hidden_tag() }}
   <p>
@@ -20,4 +23,5 @@
   </p>
   <p><input type="submit" value="Отправить"></p>
 </form>
+</h5>
 {% endblock %}
