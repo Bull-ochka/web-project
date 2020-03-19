@@ -1,11 +1,8 @@
-/Include
-/Lib
-/Scripts
 /__pycache__
 /migrations
 /.idea
+/.venv
 
 *.pyc
 
-pyvenv.cfg
 app.db
