@@ -8,7 +8,6 @@ def index():
     boards = Board.query.all()
     return render_template('index.html', boards=boards)
 
-
 @app.route('/<string:board_prefix>/', methods=['GET', 'POST'])
 def board(board_prefix):
     form = NewThreadForm()

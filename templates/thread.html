@@ -3,6 +3,10 @@
 {% block title %}{{ thread.board.prefix }} - {{ thread.id }}{% endblock %}
 
 {% block body %}
+
+<div class="container-fluid no-gutters">
+  <div class="row">
+    <div class="col">
 <h4>
 {{ thread.title }}:
 </h4>
@@ -24,4 +28,7 @@
   <p><input type="submit" value="Отправить"></p>
 </form>
 </h5>
+    </div>
+  </div>
+</div>
 {% endblock %}

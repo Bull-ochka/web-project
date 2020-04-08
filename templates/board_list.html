@@ -3,7 +3,9 @@
 {% block title %}board_list{% endblock %}
 
 {% block body %}
-<div class ="col">
+<div class="container-fluid no-gutters">
+  <div class="row">
+    <div id="list" class="col-3">
     <h1>Доски:</h1>
     {% for board in boards %}
     <br>
@@ -12,6 +14,8 @@
       Похоже, здесь нет ни одной доски!
     {% endfor %}
     </h3>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
