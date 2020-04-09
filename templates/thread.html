@@ -3,6 +3,7 @@
 {% block title %}{{ thread.board.prefix }} - {{ thread.id }}{% endblock %}
 
 {% block body %}
+<div class="row">
 <div class="row w-100">
   <div class="col-2">
     {{ super() }}
@@ -11,6 +12,16 @@
     <h4>
       {{ thread.title }}:
     </h4>
+
+
+    {% for post in thread.posts %}
+      <br>
+      <h5><p>{{ post.datetime }}: {{ post.message }}</p></h5>
+    {% else %}
+      Похоже, здесь нет ни одного поста!
+    {% endfor %}
+    <br>
+    <form class="post-maker" method="post" id="message_form">
 
     <div id="posts" class="">
       {% for post in thread.posts %}
@@ -23,14 +34,20 @@
     </div>
 
     <form class="post-maker">
+
       {{ form.hidden_tag() }}
       <p>
         {{ form.message.label }}
         {{ form.message }}
       </p>
+
+      <p><input type="submit" value="Отправить"></p>
+    </form>
+
       <!-- <p><input type="submit" value="Отправить"></p> -->
     </form>
     <input id="asd" type="button" name="button" value="Отправить"></input>
+
   </div>
 </div>
 {% endblock %}
