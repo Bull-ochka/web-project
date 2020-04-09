@@ -1,6 +1,7 @@
 body {
 background-color: #9999cc;
 background-image: url(/static/img/forest-back.jpg);
+background-size: 100%;
 font-family: "Times New Roman", sans-serif;
 font-weight: 100;
 }

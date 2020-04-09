@@ -19,8 +19,7 @@
       Похоже, здесь нет ни одного поста!
     {% endfor %}
     <br>
-
-    <form class="post-maker" method="post">
+    <form class="post-maker" method="post" id="message_form">
       {{ form.hidden_tag() }}
       <p>
         {{ form.message.label }}
