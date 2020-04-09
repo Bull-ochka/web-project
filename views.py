@@ -58,10 +58,17 @@ def api_board(board_prefix):
     threads = board.threads
     return jsonify([x.serialize for x in threads])
 
-@app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET'])
+@app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET', 'POST'])
 def api_thread(board_prefix, thread_id):
     # Must return not HTML page
     board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
     thread = board.threads.filter(Thread.id == thread_id).first_or_404()
+
+    if request.method == 'POST':
+        new_post = Post(message=request.json['message'], thread_id=thread_id)
+        db.session.add(new_post)
+        db.session.commit()
+
     posts = thread.posts
+
     return jsonify([x.serialize for x in posts])
