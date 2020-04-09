@@ -1,34 +1,33 @@
-{% extends "base.html" %}
+{% extends "board_list.html" %}
 
 {% block title %}{{ thread.board.prefix }} - {{ thread.id }}{% endblock %}
 
 {% block body %}
+<div class="row">
+  <div class="col-2">
+    {{ super() }}
+  </div>
+  <div class="col-10">
+    <h4>
+      {{ thread.title }}:
+    </h4>
 
-<div class="container-fluid no-gutters">
-  <div class="row">
-    <div class="col">
-<h4>
-{{ thread.title }}:
-</h4>
-{% for post in thread.posts %}
-<h5>
-<br>
-  <p>{{ post.datetime }}: {{ post.message }}</p>
-{% else %}
-  Похоже, здесь нет ни одного поста!
-{% endfor %}
-<br>
+    {% for post in thread.posts %}
+      <br>
+      <h5><p>{{ post.datetime }}: {{ post.message }}</p></h5>
+    {% else %}
+      Похоже, здесь нет ни одного поста!
+    {% endfor %}
+    <br>
 
-<form class="post-maker" method="post">
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.message.label }}
-    {{ form.message }}
-  </p>
-  <p><input type="submit" value="Отправить"></p>
-</form>
-</h5>
-    </div>
+    <form class="post-maker" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.message.label }}
+        {{ form.message }}
+      </p>
+      <p><input type="submit" value="Отправить"></p>
+    </form>
   </div>
 </div>
 {% endblock %}
