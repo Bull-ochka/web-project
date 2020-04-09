@@ -2,8 +2,10 @@ body {
 background-color: #9999cc;
 background-image: url(/static/img/forest-back.jpg);
 background-size: 100%;
+background-attachment: fixed;
 font-family: "Times New Roman", sans-serif;
 font-weight: 100;
+}
 #list {
     background-color: #9999dd;
     font-color: #000000;
