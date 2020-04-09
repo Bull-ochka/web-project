@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, jsonify
 from models import *
 from forms import *
 from app import app
@@ -43,3 +43,32 @@ def thread(board_prefix, thread_id):
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html'), 404
+
+
+# REST API
+@app.route('/api/board', methods=['GET'])
+def api_board_all():
+    boards = Board.query.all()
+    return jsonify([x.serialize for x in boards])
+
+@app.route('/api/board/<string:board_prefix>/', methods=['GET'])
+def api_board(board_prefix):
+    # Must return not HTML page
+    board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
+    threads = board.threads
+    return jsonify([x.serialize for x in threads])
+
+@app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET', 'POST'])
+def api_thread(board_prefix, thread_id):
+    # Must return not HTML page
+    board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
+    thread = board.threads.filter(Thread.id == thread_id).first_or_404()
+
+    if request.method == 'POST':
+        new_post = Post(message=request.json['message'], thread_id=thread_id)
+        db.session.add(new_post)
+        db.session.commit()
+
+    posts = thread.posts
+
+    return jsonify([x.serialize for x in posts])
