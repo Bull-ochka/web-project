@@ -7,24 +7,20 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css',v=1) }}">
-    <link rel='shortcut icon' type='image/x-icon' href="{{ url_for('static', filename='img/icon.png',v=1) }}"/>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel='shortcut icon' type='image/x-icon' href="{{ url_for('static', filename='img/favicon.ico') }}"/>
     <h1><title>{% block title %}{% endblock %}</title></h1>
 
   </head>
   <body>
-  <nav class="navbar navbar-expend-lg navbar-dark bg-dark">
-    <a class="navbar-brand">
-      <h2>
-        <p class="text-center">Отечественная имиджборда</p>
-      </h2>
-    </a>
-  </nav>
-  <div class="container-fluid no-gutters">
-    <div class="row">
-      {% block body %}{% endblock %}
-    </div>
-  </div>
+    <nav class="navbar navbar-expend-lg navbar-dark bg-dark">
+      <a href="/" class="navbar-brand">
+        <h2>
+          <p class="text-center">Ё - имиджборда</p>
+        </h2>
+      </a>
+    </nav>
+    {% block body %}{% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
