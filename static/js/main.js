@@ -32,6 +32,7 @@ var update_posts = function(message) {
     });
 }
 
+
 function isWhitespace(str) {
   return /^\s*$/.test(str);
 }
@@ -50,4 +51,50 @@ $('#thread_send_mes').click(function() {
     }
 })
 
-setInterval(update_posts, 3000, '')
+var update_threads = function(title, message) {
+    var ajax;
+
+    if (message == '') {
+        ajax = $.ajax({
+            url: '/api/board/' + board_prefix,
+            method: 'GET'
+        });
+    }
+    else {
+        ajax = $.ajax({
+            url: '/api/board/' + board_prefix,
+            method: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'title': title,
+                'message': message
+            }, null, '\t')
+        });
+    }
+
+    ajax.done(function(result) {
+        var threadsString = '';
+        for (var post in result) {
+            var link = '/' + board_prefix + '/' + result[post].id + '/';
+            threadsString += '<p><a href="' + link + '">' + result[post].title + '</a></p>'
+        }
+        $('#threads').html(threadsString);
+    });
+}
+
+$('#sendBtn').click(function() {
+    var message = $('#message').val();
+    update_posts(message);
+    $('#message').val('');
+});
+
+
+
+if (board_prefix != '') {
+    if (thread_id != '') {
+        setInterval(update_posts, 3000, '')
+    }
+    else {
+        setInterval(update_threads, 10000, '', '')
+    }
+}

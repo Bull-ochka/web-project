@@ -2,12 +2,25 @@
 
 {% block title %}{{ board.prefix }}{% endblock %}
 
-{% block body %} 
-<div class="row">
-<div class="row w-100">
-  <div class="col-2">
-    {{ super() }}
-  </div>
+{% block body %}
+<div class="container-fluid">
+  <div class="row w-100">
+    <div class="col-2">
+      {{ super() }}
+    </div>
+
+    <div class="col-10">
+      <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
+
+      <h3>Треды:</h3>
+      <h5>
+        <div id="threads" class="">
+          {% for thread in board.threads %}
+            <p><a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a></p>
+          {% else %}
+            Похоже, здесь нет ни одного треда!
+          {% endfor %}
+        </div>
 
   <div class="col-10" id="threads">
     <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
@@ -42,6 +55,23 @@
 
       </form>
     </h5>
+	
+        <br>Создать тред:<br>
+        <form class="thread-maker" method="post">
+          {{ form.hidden_tag() }}
+          <p>
+            {{ form.title.label }}
+            {{ form.title }}
+          </p>
+          <p>
+            {{ form.message.label }}
+            {{ form.message }}
+          </p>
+          <p><input type="submit" value="Создать"></p>
+        </form>
+      </h5>
+
+    </div>
   </div>
 </div>
 {% endblock %}
