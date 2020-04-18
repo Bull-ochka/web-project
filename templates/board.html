@@ -9,7 +9,7 @@
     {{ super() }}
   </div>
 
-  <div class="col-10">
+  <div class="col-10" id="threads">
     <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
 
     <h3>Треды:</h3>
@@ -33,6 +33,13 @@
           {{ form.message }}
         </p>
         <p><input type="submit" value="Создать"></p>
+
+        <p><label for="threadname">Название доски</label></p>
+        <p><input id="threadname" placeholder="Введите название треда"></p>
+        <label for="firstthreadmessage">Сообщение: </label>
+        <p><textarea type="text" id="firstthreadmessage" placeholder="Введите сообщение..."></textarea></p>
+        <p><input id="create_thread" type="button" value="Отправить"></p>
+
       </form>
     </h5>
   </div>

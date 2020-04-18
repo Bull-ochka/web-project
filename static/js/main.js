@@ -32,10 +32,22 @@ var update_posts = function(message) {
     });
 }
 
-$('#asd').click(function() {
-    var message = $('#message').val();
-    update_posts(message);
-    $('#message').val('');
+function isWhitespace(str) {
+  return /^\s*$/.test(str);
+}
+
+$('#thread_send_mes').click(function() {
+    var message = document.querySelector('#threadmessage').value;
+
+    var empty = isWhitespace(message);
+    if(empty){
+        alert('Не допускается ввод пустого сообщения');
+        return false;
+    }
+    else {
+        update_posts(message);
+        $('#threadmessage').val('');
+    }
 })
 
 setInterval(update_posts, 3000, '')

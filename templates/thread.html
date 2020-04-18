@@ -36,18 +36,18 @@
     <form class="post-maker">
 
       {{ form.hidden_tag() }}
-      <p>
-        {{ form.message.label }}
-        {{ form.message }}
-      </p>
 
-      <p><input type="submit" value="Отправить"></p>
+      <label for="threadmessage">Сообщение: </label>
+      <p><textarea type="text" id="threadmessage" placeholder="Введите сообщение..."></textarea></p>
+      <p><input id="thread_send_mes" type="button" name="button" value="Отправить"></p>
+
     </form>
-
       <!-- <p><input type="submit" value="Отправить"></p> -->
     </form>
-    <input id="asd" type="button" name="button" value="Отправить"></input>
+
+
 
   </div>
+</div>
 </div>
 {% endblock %}
