@@ -51,11 +51,20 @@ def api_board_all():
     boards = Board.query.all()
     return jsonify([x.serialize for x in boards])
 
-@app.route('/api/board/<string:board_prefix>/', methods=['GET'])
+@app.route('/api/board/<string:board_prefix>/', methods=['GET', 'POST'])
 def api_board(board_prefix):
     # Must return not HTML page
     board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
     threads = board.threads
+
+    if request.method == 'POST':
+        print(request.data)
+        new_thread = Thread(title=request.json['title'], message=request.json['message'], board_prefix=board_prefix)
+        db.session.add(new_thread)
+        db.session.commit()
+
+        return redirect(url_for('thread', board_prefix=board_prefix, thread_id=new_thread.id))
+
     return jsonify([x.serialize for x in threads])
 
 @app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET', 'POST'])

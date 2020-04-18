@@ -82,20 +82,15 @@ var update_threads = function(title, message) {
     });
 }
 
-$('#create_thread').click(function() {
-    var title = document.querySelector('#threadName').value;
-    var message = document.querySelector('#firstThreadMessage').value;
+var createThreadFunc = function() {
+    var title = $('#threadName').val();
+    var message = $('#firestThreadMessage').val();
 
     if(isWhitespace(title) || isWhitespace(message)){
         alert('Введите название треда и первое сообщение');
         return false;
     }
-    else {
-        update_threads(title, message);
-        $('#threadName').val('');
-        $('#firstThreadMessage').val('');
-    }
-})
+};
 
 if (board_prefix != '') {
     if (thread_id != '') {

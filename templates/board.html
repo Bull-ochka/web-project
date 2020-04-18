@@ -23,15 +23,14 @@
         </div>
 
         <br>Создать тред:<br>
-        <form class="thread-maker" method="post">
+        <form class="thread-maker" method="post" onsubmit="createThreadFunc">
           {{ form.hidden_tag() }}
 
-          <p><label for="threadName">Название треда</label></p>
-          <p><input id="threadName" placeholder="Введите название треда"></p>
-          <label for="firstThreadMessage">Сообщение: </label>
-          <p><textarea type="text" id="firstThreadMessage" placeholder="Введите сообщение..."></textarea></p>
-          <p><input id="create_thread" type="button" value="Создать"></p>
-
+          <p>{{ form.title.label }}   </p>
+          <p>{{ form.title }}         </p>
+          <p>{{ form.message.label }} </p>
+          <p>{{ form.message }}       </p>
+          <p><input type="submit" value="Создать"></p>
         </form>
       </h5>
 
