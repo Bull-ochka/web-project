@@ -26,7 +26,6 @@
 
       <form class="post-maker" method="post" id="message_form">
 
-
       {{ form.hidden_tag() }}
 
       <label for="threadmessage">Сообщение: </label>
@@ -34,21 +33,6 @@
       <p><input id="thread_send_mes" type="button" name="button" value="Отправить"></p>
 
     </form>
-      <!-- <p><input type="submit" value="Отправить"></p> -->
-    </form>
-
-
-
-        {{ form.hidden_tag() }}
-        <p>
-          {{ form.message.label }}
-          {{ form.message }}
-        </p>
-
-        <!-- <p><input type="submit" value="Отправить"></p> -->
-        <input id="sendBtn" type="button" name="button" value="Отправить"></input>
-      </form>
-
 
     </div>
   </div>

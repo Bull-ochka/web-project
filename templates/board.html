@@ -22,52 +22,16 @@
           {% endfor %}
         </div>
 
-  <div class="col-10" id="threads">
-    <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
-
-    <h3>Треды:</h3>
-    {% for thread in board.threads %}
-      <div class="col-4">
-        <h5><p><a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a></p></h5>
-      </div>
-    {% else %}
-      <h5>Похоже, здесь нет ни одного треда!</h5>
-    {% endfor %}
-    <h5>
-      <br>Создать тред: <br>
-      <form class="thread-maker" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-          {{ form.title.label }}
-          {{ form.title }}
-        </p>
-        <p>
-          {{ form.message.label }}
-          {{ form.message }}
-        </p>
-        <p><input type="submit" value="Создать"></p>
-
-        <p><label for="threadname">Название доски</label></p>
-        <p><input id="threadname" placeholder="Введите название треда"></p>
-        <label for="firstthreadmessage">Сообщение: </label>
-        <p><textarea type="text" id="firstthreadmessage" placeholder="Введите сообщение..."></textarea></p>
-        <p><input id="create_thread" type="button" value="Отправить"></p>
-
-      </form>
-    </h5>
-	
         <br>Создать тред:<br>
         <form class="thread-maker" method="post">
           {{ form.hidden_tag() }}
-          <p>
-            {{ form.title.label }}
-            {{ form.title }}
-          </p>
-          <p>
-            {{ form.message.label }}
-            {{ form.message }}
-          </p>
-          <p><input type="submit" value="Создать"></p>
+
+          <p><label for="threadName">Название треда</label></p>
+          <p><input id="threadName" placeholder="Введите название треда"></p>
+          <label for="firstThreadMessage">Сообщение: </label>
+          <p><textarea type="text" id="firstThreadMessage" placeholder="Введите сообщение..."></textarea></p>
+          <p><input id="create_thread" type="button" value="Создать"></p>
+
         </form>
       </h5>
 
