@@ -55,7 +55,6 @@ def api_board_all():
 def api_board(board_prefix):
     # Must return not HTML page
     board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
-    threads = board.threads
 
     if request.method == 'POST':
         print(request.data)
@@ -64,6 +63,9 @@ def api_board(board_prefix):
         db.session.commit()
 
         return redirect(url_for('thread', board_prefix=board_prefix, thread_id=new_thread.id))
+
+    last_id = request.args['last_id']
+    threads = board.threads.filter(Thread.id > last_id).all()
 
     return jsonify([x.serialize for x in threads])
 
@@ -78,6 +80,11 @@ def api_thread(board_prefix, thread_id):
         db.session.add(new_post)
         db.session.commit()
 
-    posts = thread.posts
+    if request.method == 'POST':
+        last_id = request.json['last_id']
+    else:
+        last_id = request.args['last_id']
+
+    posts = thread.posts.filter(Post.id > last_id).all()
 
     return jsonify([x.serialize for x in posts])

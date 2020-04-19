@@ -15,13 +15,7 @@
 
       <br>
       <div id="posts" class="">
-        {% for post in thread.posts %}
-          <br>
-          <h5><p>{{ post.datetime }}: {{ post.message }}</p></h5>
-        {% else %}
-          Похоже, здесь нет ни одного поста!
-        {% endfor %}
-        <br>
+        <!-- All posts get from AJAX -->
       </div>
 
       <form class="post-maker" method="post" id="message_form">

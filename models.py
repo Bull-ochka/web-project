@@ -24,7 +24,7 @@ class Thread(db.Model):
     title = db.Column(db.String(128), index=True)
 
     board_prefix = db.Column(db.String(8), db.ForeignKey('board.prefix'), nullable=False)
-    posts = db.relationship('Post', backref='thread')
+    posts = db.relationship('Post', backref='thread', lazy='dynamic')
 
     @property
     def serialize(self):
