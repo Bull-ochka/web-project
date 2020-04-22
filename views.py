@@ -46,6 +46,12 @@ def not_found(e):
 
 
 # REST API
+def error_not_found(msg):
+    return {
+        'status': 'error',
+        'message': msg + ' not found'
+    }
+
 @app.route('/api/board', methods=['GET'])
 def api_board_all():
     boards = Board.query.all()
@@ -53,8 +59,13 @@ def api_board_all():
 
 @app.route('/api/board/<string:board_prefix>/', methods=['GET', 'POST'])
 def api_board(board_prefix):
-    # Must return not HTML page
-    board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
+    board = Board.query.filter(Board.prefix == board_prefix).first()
+    if (board == None):
+        return jsonify(error_not_found('Board'))
+
+    response = {
+        'status': 'ok'
+    }
 
     if request.method == 'POST':
         print(request.data)
@@ -62,29 +73,41 @@ def api_board(board_prefix):
         db.session.add(new_thread)
         db.session.commit()
 
-        return redirect(url_for('thread', board_prefix=board_prefix, thread_id=new_thread.id))
+        response['url'] = url_for('thread', board_prefix=board_prefix, thread_id=new_thread.id)
 
+        return jsonify(response)
+
+    # GET method
     last_id = request.args['last_id']
     threads = board.threads.filter(Thread.id > last_id).all()
+    response['threads'] = list(map(lambda x: x.serialize, threads))
 
-    return jsonify([x.serialize for x in threads])
+    return jsonify(response)
 
 @app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET', 'POST'])
 def api_thread(board_prefix, thread_id):
-    # Must return not HTML page
-    board = Board.query.filter(Board.prefix == board_prefix).first_or_404()
-    thread = board.threads.filter(Thread.id == thread_id).first_or_404()
+    board = Board.query.filter(Board.prefix == board_prefix).first()
+    if (board == None):
+        return jsonify(error_not_found('Board'))
+
+    thread = board.threads.filter(Thread.id == thread_id).first()
+    if (thread == None):
+        return jsonify(error_not_found('Thread'))
+
+    response = {
+        'status': 'ok'
+    }
 
     if request.method == 'POST':
         new_post = Post(message=request.json['message'], thread_id=thread_id)
         db.session.add(new_post)
         db.session.commit()
 
-    if request.method == 'POST':
-        last_id = request.json['last_id']
-    else:
-        last_id = request.args['last_id']
+        response['post_id'] = new_post.id
+        return jsonify(response)
 
+    last_id = request.args['last_id']
     posts = thread.posts.filter(Post.id > last_id).all()
+    response['posts'] = list(map(lambda x: x.serialize, posts))
 
-    return jsonify([x.serialize for x in posts])
+    return jsonify(response)

@@ -13,3 +13,6 @@
 ## Windows:
     C:.venv\Scripts\activate
     python manage.py runserver
+
+# API
+См. файл [api.json](/api.json)

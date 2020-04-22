@@ -1,0 +1,102 @@
+{
+    "api": [
+        {
+            "path": "/api/board/",
+            "methods": [
+                {
+                    "comment": "Returns a list of all boards",
+                    "method": "GET",
+                    "params": [],
+                    "responseItem": {
+                        "prefix": "<string>",
+                        "name": "<string>"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/api/board/<boards_prefix>",
+            "methods": [
+                {
+                    "comment": "Returns a list of threads on this board, with ID > 'last_id'",
+                    "method": "GET",
+                    "params": {
+                        "last_id": "<int>"
+                    },
+                    "responseOnSuccess": {
+                        "status": "ok",
+                        "threads": {
+                            "type": "list",
+                            "item": {
+                                "id": "<string>",
+                                "title": "<string>"
+                            }
+                        }
+                    },
+                    "responseOnFail": {
+                        "status": "error",
+                        "message": "<string>"
+                    }
+                },
+                {
+                    "comment": "Creates a new thread on this board, returns a URL link to created thread",
+                    "method": "POST",
+                    "params": {
+                        "title": "<string>",
+                        "message": "<string>"
+                    },
+                    "responseOnSuccess": {
+                        "status": "ok",
+                        "url": "<URL>"
+                    },
+                    "responseOnFail": {
+                        "status": "error",
+                        "message": "<string>"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/api/board/<board_prefix>/thread/<thread_id>",
+            "methods": [
+                {
+                    "comment": "Returns a list on posts on this thread, with ID > 'last_id'",
+                    "method": "GET",
+                    "params": {
+                        "last_id": "<int>"
+                    },
+                    "responseOnSuccess": {
+                        "status": "ok",
+                        "posts": {
+                            "type": "list",
+                            "item": {
+                                "id": "<int>",
+                                "message": "<string>",
+                                "datetime": "<datetime>"
+                            }
+                        }
+                    },
+                    "responseOnFail": {
+                        "status": "error",
+                        "message": "<string>"
+                    }
+                },
+                {
+                    "comment": "Creates a new post on this thread, return id of created post",
+                    "method": "POST",
+                    "params": {
+                        "message": "<string>"
+                    },
+                    "responseOnSuccess": {
+                        "status": "ok",
+                        "post_id": "<int>"
+                    },
+                    "responseOnFail": {
+                        "status": "error",
+                        "message": "<string>"
+                    }
+                }
+            ]
+        }
+    ]
+}

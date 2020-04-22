@@ -14,13 +14,11 @@
 
       <h3>Треды:</h3>
       <h5>
+        <div id="messages">
+        </div>
+
         <div id="threads" class="">
           <!-- All threads get from AJAX -->
-          <!-- {% for thread in board.threads %}
-            <p><a href="{{ url_for('thread', board_prefix=board.prefix, thread_id=thread.id) }}">{{ thread.title }}</a></p>
-          {% else %}
-            Похоже, здесь нет ни одного треда!
-          {% endfor %} -->
         </div>
 
         <br>Создать тред:<br>
