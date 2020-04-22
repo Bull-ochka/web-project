@@ -17,6 +17,20 @@ var update_posts = function(message) {
             data: {
                 'last_id': last_post_id
             }
+        }).done(function(result) {
+            if (result['status'] == 'ok') {
+                var posts = result['posts'];
+                var postsString = $('#posts').html();
+
+                for (var post in posts) {
+                    postsString += '<br><h5><p>' + posts[post].datetime + ': ' + posts[post].message + '</p></h5>';
+                }
+                if (posts.length > 0) last_post_id = posts[posts.length - 1].id
+                $('#posts').html(postsString);
+            }
+            if (result['status'] == 'error') {
+                $('#messages').html(result['message']);
+            }
         });
     }
     else {
@@ -28,17 +42,15 @@ var update_posts = function(message) {
                 'message': message,
                 'last_id': last_post_id
             }, null, '\t')
+        }).done(function(result) {
+            if (result['status'] == 'ok') {
+                // Nothing to do
+            }
+            if (result['status'] == 'error') {
+                $('#messages') = result['message'];
+            }
         });
     }
-
-    ajax.done(function(result) {
-        var postsString = $('#posts').html();
-        for (var post in result) {
-            postsString += '<br><h5><p>' + result[post].datetime + ': ' + result[post].message + '</p></h5>';
-        }
-        if (result.length > 1) last_post_id = result[result.length - 1].id
-        $('#posts').html(postsString);
-    });
 }
 
 var update_threads = function(title, message) {
@@ -51,6 +63,21 @@ var update_threads = function(title, message) {
             data: {
                 'last_id': last_thread_id
             }
+        }).done(function(result) {
+            if (result['status'] == 'ok') {
+                var threads = result['threads'];
+                var threadsString = $('#threads').html();
+
+                for (var thread in threads) {
+                    var link = '/' + board_prefix + '/' + threads[thread].id + '/';
+                    threadsString += '<p><a href="' + link + '">' + threads[thread].title + '</a></p>';
+                }
+                if (threads.length > 0) last_thread_id = threads[threads.length - 1].id;
+                $('#threads').html(threadsString);
+            }
+            if (result['status'] == 'error') {
+                $('messages').html(result['message']);
+            }
         });
     }
     else {
@@ -62,18 +89,15 @@ var update_threads = function(title, message) {
                 'title': title,
                 'message': message
             }, null, '\t')
+        }).done(function(result) {
+            if (result['status'] == 'ok') {
+                window.location.replace(result['url']);
+            }
+            if (result['status'] == 'error') {
+                $('messages') = result['message'];
+            }
         });
     }
-
-    ajax.done(function(result) {
-        var threadsString = $('#threads').html();
-        for (var thread in result) {
-            var link = '/' + board_prefix + '/' + result[thread].id + '/';
-            threadsString += '<p><a href="' + link + '">' + result[thread].title + '</a></p>';
-        }
-        if (result.length > 1) last_thread_id = result[result.length - 1].id;
-        $('#threads').html(threadsString);
-    });
 }
 
 // Select update function to loop
