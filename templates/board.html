@@ -5,11 +5,11 @@
 {% block body %}
 <div class="container-fluid">
   <div class="row w-100">
-    <div class="col-2">
+    <div class="col-2 list">
       {{ super() }}
     </div>
 
-    <div class="col-10">
+    <div class="col">
       <h1>Доска: {{ board.prefix }} - {{ board.name }}</h1>
 
       <h3>Треды:</h3>
@@ -23,16 +23,17 @@
           {% endfor %} -->
         </div>
 
-        <br>Создать тред:<br>
-        <form class="thread-maker" method="post" onsubmit="createThreadFunc">
-          {{ form.hidden_tag() }}
-
-          <p>{{ form.title.label }}   </p>
-          <p>{{ form.title }}         </p>
-          <p>{{ form.message.label }} </p>
-          <p>{{ form.message }}       </p>
-          <p><input type="submit" value="Создать"></p>
-        </form>
+        <div id="threadCreate">
+          Создать тред:
+          <form class="form-maker" method="post" onsubmit="createThreadFunc">
+            {{ form.hidden_tag() }}
+            {{ form.title.label }}<br>
+            {{ form.title }} <br>
+            {{ form.message.label }}<br>
+            {{ form.message }}
+            <p><input type="submit" value="Создать"></p>
+          </form>
+        </div>
       </h5>
 
     </div>

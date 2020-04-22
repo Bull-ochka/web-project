@@ -2,14 +2,13 @@
 
 {% block body %}
 
-<div id="list">
-  <h1>Доски:</h1>
-  {% for board in boards %}
-    <br>
-  <h3><p><a href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a></p></h3>
-  {% else %}
-    Похоже, здесь нет ни одной доски!
-  {% endfor %}
-</div>
+
+    <h1>Доски:</h1>
+      {% for board in boards %}
+      <h3><a class="list" href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a></h3>
+      {% else %}
+        Похоже, здесь нет ни одной доски!
+      {% endfor %}
+
 
 {% endblock %}

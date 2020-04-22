@@ -1,11 +1,36 @@
+.list {
+    background: #696970;
+    margin-left: 0px;
+    float: left;
+    color: #ffffff;
+}
+.form-maker {
+    background-color: #696969;
+    color: #f0f8ff;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #696970; /* Рамка вокруг слоя */
+}
+#title {
+    width: 100%;
+    background-color: #696970;
+    color: #f0f8ff;
+}
+#message {
+    width: 100%;
+    background-color: #696970;
+    color: #f0f8ff;
+}
+#threadmessage {
+    width: 100%;
+}
 body {
-    background-color: #9999cc;
+    background-color: #2F4F4F;
     background-image: url('/static/img/forest-back.jpg');
     background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: "Times New Roman", sans-serif;
     font-weight: 100;
-}
-#list {
-    background-color: #9999dd;
-    font-color: #000000;
+    color: #123456;
 }
