@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, jsonify
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from models import *
 from forms import *
 from app import app
@@ -60,6 +60,11 @@ def login():
 
     return render_template('login.html', form=form)
 
+@app.route('/logout/', methods=['GET'])
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 
 # REST API
 def error_not_found(msg):
@@ -67,8 +72,13 @@ def error_not_found(msg):
         'status': 'error',
         'message': msg + ' not found'
     }
+def error_wrong_argument(msg):
+    return {
+        'status': 'error',
+        'message': 'Argument "' + msg + '" is incorrect'
+    }
 
-@app.route('/api/board', methods=['GET'])
+@app.route('/api/board/', methods=['GET'])
 def api_board_all():
     boards = Board.query.all()
     return jsonify([x.serialize for x in boards])
@@ -95,12 +105,15 @@ def api_board(board_prefix):
 
     # GET method
     last_id = request.args['last_id']
+    # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
+    if not last_id.isdigit():
+        return jsonify(error_wrong_argument('last_id'))
     threads = board.threads.filter(Thread.id > last_id).all()
     response['threads'] = list(map(lambda x: x.serialize, threads))
 
     return jsonify(response)
 
-@app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>', methods=['GET', 'POST'])
+@app.route('/api/board/<string:board_prefix>/thread/<int:thread_id>/', methods=['GET', 'POST'])
 def api_thread(board_prefix, thread_id):
     board = Board.query.filter(Board.prefix == board_prefix).first()
     if (board == None):
@@ -123,6 +136,9 @@ def api_thread(board_prefix, thread_id):
         return jsonify(response)
 
     last_id = request.args['last_id']
+    # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
+    if not last_id.isdigit():
+        return jsonify(error_wrong_argument('last_id'))
     posts = thread.posts.filter(Post.id > last_id).all()
     response['posts'] = list(map(lambda x: x.serialize, posts))
 
