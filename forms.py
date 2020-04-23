@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
+from wtforms import StringField, TextAreaField, PasswordField
 from wtforms.validators import DataRequired
 
 
@@ -9,3 +9,7 @@ class NewThreadForm(FlaskForm):
 
 class NewPostForm(FlaskForm):
     message = TextAreaField('Сообщение: ', validators=[DataRequired()])
+
+class LoginForm(FlaskForm):
+    username = StringField('Имя пользователя: ', validators=[DataRequired()])
+    password = PasswordField('Пароль: ', validators=[DataRequired()])

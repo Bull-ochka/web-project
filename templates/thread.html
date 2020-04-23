@@ -12,7 +12,7 @@
       <h2>
         {{ thread.title }}:
       </h2>
-      
+
       <br>
 
       <div id="messages">
@@ -35,4 +35,9 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/updates.js') }}"></script>
 {% endblock %}
