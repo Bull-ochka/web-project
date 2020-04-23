@@ -19,6 +19,13 @@
           <p class="text-center">Ё - имиджборда</p>
         </h2>
       </a>
+      <!-- Сделать красиво -->
+      {% if current_user.is_authenticated %}
+        {{ current_user.username }}
+      {% else %}
+        <a href="/login">Log In</a>
+      {% endif %}
+      <!-- Сделать красиво -->
     </nav>
     {% block body %}{% endblock %}
 
