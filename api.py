@@ -1,5 +1,9 @@
 from flask import Blueprint, request, url_for, jsonify, abort
+from flask_login import current_user, login_user, logout_user, login_required
+from datetime import datetime
 from models import *
+from config import SECRET_KEY
+import jwt
 
 api = Blueprint('api', __name__)
 
@@ -13,12 +17,32 @@ class error:
     def wrong_argument(msg):
         return {
             'status': 'error',
-            'message': 'Argument "' + msg + '" is incorrect'
+            'message': 'Argument "' + msg + '" is incorrect or missing'
         }
     def wrong_url(msg):
         return {
             'status': 'error',
             'message': 'Path "' + msg + '" is wrong'
+        }
+    def wrong_login_data():
+        return {
+            'status': 'error',
+            'message': 'Wrong username/password'
+        }
+    def wrong_format():
+        return {
+            'status': 'error',
+            'message': 'Data has wrong format'
+        }
+    def no_permission():
+        return {
+            'status': 'error',
+            'message': 'User hasn\'t enough permissions'
+        }
+    def unauthorized():
+        return {
+            'status': 'error',
+            'message': 'User must be authorized'
         }
 
 
@@ -38,8 +62,15 @@ def api_board(board_prefix):
     }
 
     if request.method == 'POST':
-        print(request.data)
-        new_thread = Thread(title=request.json['title'], message=request.json['message'], board_prefix=board_prefix)
+        title = request.json.get('title')
+        message = request.json.get('message')
+
+        if title is None:
+            return jsonify(error.wrong_argument('title'))
+        if message is None:
+            return jsonify(error.wrong_argument('message'))
+
+        new_thread = Thread(title=title, message=message, board_prefix=board_prefix)
         db.session.add(new_thread)
         db.session.commit()
 
@@ -48,7 +79,9 @@ def api_board(board_prefix):
         return jsonify(response)
 
     # GET method
-    last_id = request.args['last_id']
+    last_id = request.args.get('last_id')
+    if last_id is None:
+        last_id = '0'
     # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
     if not last_id.isdigit():
         return jsonify(error.wrong_argument('last_id'))
@@ -72,26 +105,97 @@ def api_thread(board_prefix, thread_id):
     }
 
     if request.method == 'POST':
-        new_post = Post(message=request.json['message'], thread_id=thread_id)
+        user_id = None if not current_user.is_authenticated else current_user.id
+        message = request.json.get('message')
+
+        if message is None:
+            return jsonify(error.wrong_argument('message'))
+
+        new_post = Post(message=message, thread_id=thread_id, user_id=user_id)
         db.session.add(new_post)
         db.session.commit()
 
         response['post_id'] = new_post.id
         return jsonify(response)
 
-    last_id = request.args['last_id']
+    last_id = request.args.get('last_id')
+    if last_id is None:
+        last_id = '0'
     # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
     if not last_id.isdigit():
         return jsonify(error.wrong_argument('last_id'))
     posts = thread.posts.filter(Post.id > last_id).all()
-    response['posts'] = list(map(lambda x: x.serialize, posts))
+
+    def set_mine_flag(post):
+        obj = post.serialize
+        if current_user.is_authenticated:
+            obj['mine'] = current_user.id == post.user_id
+        else:
+            obj['mine'] = False
+        return obj
+
+    response['posts'] = list(map(set_mine_flag, posts))
 
     return jsonify(response)
+
+@api.route('/edit/post/<int:post_id>', methods=['POST'])
+@login_required
+def edit_post(post_id):
+    post = Post.query.get(post_id)
+    if post is None:
+        return jsonify(error.not_found('Post with id={}'.format(post_id)))
+    if post.user_id != current_user.id:
+        return jsonify(error.no_permission())
+
+    response = {
+        'status': 'ok'
+    }
+
+    message = request.json.get('message')
+    if message is None:
+        return jsonify(error.wrong_argument('message'))
+    post.message = message
+    post.datetime = datetime.utcnow()
+    db.session.commit()
+
+    return jsonify(response)
+
+@api.route('/login/', methods=['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is None:
+        return jsonify(error.wrong_argument('username'))
+    if password is None:
+        return jsonify(error. wrong_argument('password'))
+
+    user = User.query.filter(User.username == username).first()
+    if user is None or user.check_password(password):
+        return jsonify(error.wrong_login_data())
+    login_user(user)
+    token = jwt.encode({
+        'id': user.id,
+        'create_time': datetime.utcnow().timestamp()
+    }, SECRET_KEY, algorithm='HS256')
+    return jsonify({ 'status': 'ok', 'token': token.decode() })
+
+@api.route('/logout/', methods=['GET', 'POST'])
+def logout():
+    username = 'None' if not current_user.is_authenticated else current_user.username
+    logout_user()
+    return jsonify({ 'status': 'ok', 'user': username })
 
 @api.route('/<path:path>')
 def any_route(path):
     abort(404)
 
+# UNAUTHORIZED
+@api.errorhandler(401)
+def unauthorized(e):
+    return jsonify(error.unauthorized()), 401
+
+# NOT FOUND
 @api.errorhandler(404)
 def not_found(e):
     return jsonify(error.wrong_url(request.path)), 404

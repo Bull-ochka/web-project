@@ -1,5 +1,5 @@
-from flask import render_template, redirect, request, url_for
-from flask_login import current_user, login_user, logout_user
+from flask import render_template, redirect, request, url_for, jsonify
+from flask_login import current_user
 from models import *
 from forms import *
 from app import app
@@ -44,23 +44,3 @@ def thread(board_prefix, thread_id):
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html'), 404
-
-
-# LOGIN
-@app.route('/login/', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            print('abc')
-            return redirect(url_for('login'))
-        login_user(user)
-        return redirect(url_for('index'))
-
-    return render_template('login.html', form=form)
-
-@app.route('/logout/', methods=['GET'])
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
