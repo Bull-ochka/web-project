@@ -23,7 +23,15 @@ var update_posts = function(message) {
                 var postsString = $('#posts').html();
 
                 for (var post in posts) {
-                    postsString += '<br><h5><p>' + posts[post].datetime + ': ' + posts[post].message + '</p></h5>';
+                    id = posts[post].id
+                    datetime = new Date(posts[post].datetime * 1000)
+                    message = posts[post].message
+                    edit = ''
+                    if (posts[post].mine) {
+                        console.log(id);
+                        edit = '<a onclick="editPost(' + id + ')">Редактировать</a>'
+                    }
+                    postsString += '<br><h5 post_id="' + id + '"><span>' + datetime + ': </span><p>' + message + '</p>' + edit + '</h5>';
                 }
                 if (posts.length > 0) last_post_id = posts[posts.length - 1].id
                 $('#posts').html(postsString);

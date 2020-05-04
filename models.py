@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -53,7 +53,7 @@ class Post(db.Model):
         return {
             'id'            : self.id,
             'message'       : self.message,
-            'datetime'      : self.datetime
+            'datetime'      : self.datetime.timestamp()
         }
 
     def __repr__(self):
