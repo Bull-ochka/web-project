@@ -25,14 +25,15 @@ def login():
         if user is None or not user.check_password(form.password.data):
             return redirect(url_for('login'))
 
-        login_user(user)
-
-        resp = make_response(redirect(url_for('index')))
         token = jwt.encode({
             'id': user.id,
             'create_time': datetime.utcnow().timestamp()
-        }, SECRET_KEY, algorithm='HS256')
-        resp.set_cookie('token', token.decode())
+        }, SECRET_KEY, algorithm='HS256').decode()
+        user.login_token = token
+        db.session.commit()
+
+        resp = make_response(redirect(url_for('index')))
+        resp.set_cookie('token', token)
         return resp
 
     return render_template('login.html', form=form)
@@ -43,5 +44,9 @@ def register():
 
 @auth.route('/logout/', methods=['GET'])
 def logout():
-    logout_user()
-    return redirect(url_for('index'))
+    if current_user.is_authenticated:
+        current_user.login_token = None
+
+    resp = make_response(redirect(url_for('index')))
+    resp.delete_cookie('token')
+    return resp
