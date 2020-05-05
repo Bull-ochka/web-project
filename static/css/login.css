@@ -1,0 +1,75 @@
+.login-form {
+    position: absolute; /* Абсолютное позиционирование */
+    width: 300px; /* Ширина слоя в пикселах */
+    height: 250px; /* Высота слоя в пикселах */
+    left: 50%; /* Положение слоя от левого края */
+    top: 50%; /* Положение слоя от верхнего края */
+    margin-left: -150px; /* Отступ слева */
+    margin-top: -100px;	/* Отступ сверху */
+    background: #3f3f3f;/* Цвет фона */
+    border: 3px solid #323232;/* Рамка вокруг слоя */
+    padding: 10px; /* Поля вокруг текста */
+    color: #f0f8ff;
+    font-family: 'Montserrat', sans-serif;
+}
+#login {
+    width: 270px;
+    height: 50px;
+    border-radius: 3px;
+    border: none;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.login-form input {
+    width: 270px;
+    height: 35px;
+}
+input[type="submit" i] {
+    color: #f0f8ff;
+    background-color: #3f3f3f;
+}
+
+.login-form p {
+  display: inline-block;
+  margin: 20px 0px;
+  position: relative;
+  border: 2px solid #f0f8ff;
+  color: #f0f8ff;
+  transition: .4s;
+}
+.login-form p:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0,0,0,0);
+  transition: .4s;
+}
+.login-form p:hover:after {
+  border-color: #f0f8ff;
+  width: calc(100% - 10px);
+  height: calc(100% + 20px);
+}
+
+.login-button a {
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  color: #f0f8ff;
+  transition: .15s ease-in-out;
+}
+.login-button a:hover {
+  box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;
+  color: #f0f8ff;
+}

@@ -1,28 +1,8 @@
 .list {
-    background: #696970;
+    overflow-y: auto;
+    background: #4f4f4f;
     margin-left: 0px;
-    float: left;
-    color: #ffffff;
-}
-.form-maker {
-    background-color: #696969;
-    color: #f0f8ff;
-    padding: 5px;
-    width: 100%;
-    border: 1px solid #696970; /* Рамка вокруг слоя */
-}
-#title {
-    width: 100%;
-    background-color: #696970;
-    color: #f0f8ff;
-}
-#message {
-    width: 100%;
-    background-color: #696970;
-    color: #f0f8ff;
-}
-#threadmessage {
-    width: 100%;
+    #f0f8ff;
 }
 body {
     background-color: #2F4F4F;
@@ -33,4 +13,9 @@ body {
     font-family: "Times New Roman", sans-serif;
     font-weight: 100;
     color: #123456;
+}
+.bg-dark {
+    background-color: #3f3f3f!important;
+    border: 2px solid #323232;
+    color: #f0f8ff;
 }

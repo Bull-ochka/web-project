@@ -1,0 +1,61 @@
+.form-maker {
+    position: fixed;
+    bottom: 7px;
+    background-color:  #3f3f3f;
+    color: #ffffff;
+    padding: 5px;
+    width: 80%;
+    border: 3px solid #323232;/* Рамка вокруг слоя */
+}
+#title {
+    width: 100%;
+    height: 35px;
+    background-color: #4f4f4f;
+    color: #ffffff;
+}
+textarea {
+    width: 100%;
+    height: 70px;
+    background-color: #4f4f4f;
+    color: #ffffff;
+}
+
+.form-maker input[type="submit" i], input[type="button" i] {
+    color: #ffffff;
+    background-color: transparent;
+    align-items: flex-start;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0px;
+    border-width: 0px;
+    border-style: none;
+    border-image: none;
+    font-family: "Times New Roman", sans-serif;
+}
+
+.form-maker label{
+    font-size: 1.25rem;
+    color: #ffffff;
+    font-family: "Times New Roman", sans-serif;
+}
+
+.form-maker a{
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px 85%;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  transition: .15s ease-in-out;
+}
+.form-maker a:hover {
+  box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;
+  color: #2F4F4F;
+}
+.form-maker p{
+  margin-bottom: initial;
+}
