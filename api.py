@@ -173,7 +173,6 @@ def login():
     user = User.query.filter(User.username == username).first()
     if user is None or user.check_password(password):
         return jsonify(error.wrong_login_data())
-    login_user(user)
     token = jwt.encode({
         'id': user.id,
         'create_time': datetime.utcnow().timestamp()
@@ -182,9 +181,9 @@ def login():
 
 @api.route('/logout/', methods=['GET', 'POST'])
 def logout():
-    username = 'None' if not current_user.is_authenticated else current_user.username
-    logout_user()
-    return jsonify({ 'status': 'ok', 'user': username })
+    if current_user.is_authenticated:
+        current_user.login_token = None
+    return jsonify({ 'status': 'ok' })
 
 @api.route('/<path:path>')
 def any_route(path):

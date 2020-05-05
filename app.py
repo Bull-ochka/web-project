@@ -17,10 +17,6 @@ from login import auth
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(auth)
 
-# @login_manager.user_loader
-# def user_loader(id):
-#     return User.query.get(id)
-
 @login_manager.request_loader
 def load_user_from_request(request):
     token = request.args.get('token')
@@ -34,7 +30,8 @@ def load_user_from_request(request):
     try:
         payload = jwt.decode(token, app.config.get('SECRET_KEY'))
         user = User.query.get(payload['id'])
-        return user
+        if user.login_token == token:
+            return user
     except jwt.ExpiredSignatureError:
         pass
     except jwt.InvalidTokenError:

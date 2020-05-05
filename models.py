@@ -66,6 +66,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     threads = db.relationship('Thread', backref='author', lazy='dynamic')
 
+    login_token = db.Column(db.String(256))
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
