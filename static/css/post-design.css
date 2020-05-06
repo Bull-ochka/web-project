@@ -1,0 +1,27 @@
+.post-design h5{
+    background: #4f4f4f;
+    opacity: 0.8;
+    color: #ffffff;
+    height: auto;
+    width: 100%;
+    border: 2px solid #3f3f3f;
+}
+.post-design span{
+    color: #800000;
+    font-style: italic ;
+}
+.post-design p{
+    /*style for messages*/
+}
+
+.thread-design p{
+    background: #4f4f4f;
+    opacity: 0.8;
+    height: auto;
+    padding: 5px;
+    width: 100%;
+    border: 2px solid #3f3f3f;
+}
+.thread-design a{
+    color: #ffffff;
+}

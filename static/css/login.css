@@ -58,7 +58,6 @@ input[type="submit" i] {
   width: calc(100% - 10px);
   height: calc(100% + 20px);
 }
-
 .login-button a {
   text-decoration: none;
   outline: none;
