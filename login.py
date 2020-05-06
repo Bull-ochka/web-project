@@ -6,7 +6,7 @@ from forms import LoginForm
 from config import SECRET_KEY
 import jwt
 
-auth = Blueprint('login', __name__)
+auth = Blueprint('auth', __name__)
 
 
 class error:
@@ -23,7 +23,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
 
         token = jwt.encode({
             'id': user.id,
