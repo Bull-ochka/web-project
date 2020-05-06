@@ -27,12 +27,17 @@
     width: 270px;
     height: 35px;
 }
-input[type="submit" i] {
-    color: #f0f8ff;
-    background-color: #3f3f3f;
-}
 
-.login-form p {
+.login-form input[type="submit" i] {
+    color: #f0f8ff;
+    background-color: transparent;
+    align-items: flex-start;
+    text-align: center;
+    cursor: pointer;
+    padding: 0px;
+    outline:none;
+}
+.login-form a{
   display: inline-block;
   margin: 20px 0px;
   position: relative;
@@ -40,7 +45,7 @@ input[type="submit" i] {
   color: #f0f8ff;
   transition: .4s;
 }
-.login-form p:after {
+.login-form a:after{
   content: "";
   position: absolute;
   top: 0;
@@ -53,11 +58,14 @@ input[type="submit" i] {
   border: 2px solid rgba(0,0,0,0);
   transition: .4s;
 }
-.login-form p:hover:after {
+.login-form a:hover:after{
+  content: inherit;
   border-color: #f0f8ff;
   width: calc(100% - 10px);
-  height: calc(100% + 20px);
+  height: calc(100% + 18px);
 }
+
+
 .login-button a {
   text-decoration: none;
   outline: none;

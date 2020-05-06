@@ -1,10 +1,10 @@
 .form-maker {
-    position: fixed;
+    position: sticky;
     bottom: 7px;
     background-color:  #3f3f3f;
     color: #ffffff;
     padding: 5px;
-    width: 80%;
+    width: 100%;
     border: 3px solid #323232;/* Рамка вокруг слоя */
 }
 #title {
@@ -32,6 +32,7 @@ textarea {
     border-style: none;
     border-image: none;
     font-family: "Times New Roman", sans-serif;
+    outline:none;
 }
 
 .form-maker label{
