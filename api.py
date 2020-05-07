@@ -118,13 +118,16 @@ def api_thread(board_prefix, thread_id):
         response['post_id'] = new_post.id
         return jsonify(response)
 
-    last_id = request.args.get('last_id')
-    if last_id is None:
-        last_id = '0'
+    last_time = request.args.get('last_time')
+    if last_time is None:
+        last_time = '0'
     # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
-    if not last_id.isdigit():
-        return jsonify(error.wrong_argument('last_id'))
-    posts = thread.posts.filter(Post.id > last_id).all()
+    try:
+        last_time = float(last_time)
+    except:
+        return jsonify(error.wrong_argument('last_time'))
+    dt = datetime.fromtimestamp(last_time)
+    posts = thread.posts.filter(Post.datetime > dt).all()
 
     def set_mine_flag(post):
         obj = post.serialize

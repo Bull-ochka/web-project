@@ -6,6 +6,7 @@ var thread_id = paths[2];
 
 var last_thread_id = 0;
 var last_post_id = 0;
+var last_post_time = 0;
 
 var update_posts = function(message) {
     var ajax;
@@ -15,26 +16,26 @@ var update_posts = function(message) {
             url: '/api/board/' + board_prefix + '/thread/' + thread_id,
             method: 'GET',
             data: {
-                'last_id': last_post_id
+                'last_time': last_post_time
             }
         }).done(function(result) {
             if (result['status'] == 'ok') {
                 var posts = result['posts'];
-                var postsString = $('#posts').html();
 
                 for (var post in posts) {
-                    id = posts[post].id
-                    datetime = new Date(posts[post].datetime * 1000)
-                    message = posts[post].message
-                    edit = ''
-                    if (posts[post].mine) {
-                        console.log(id);
-                        edit = '<a onclick="editPost(' + id + ')">Редактировать</a>'
+                    id = posts[post].id;
+                    datetime = new Date(posts[post].datetime * 1000);
+                    message = posts[post].message;
+                    last_post_time = posts[post].datetime;
+
+                    if (id <= last_post_id) {
+                        updatePost(id, message, datetime);
+                        continue;
                     }
-                    postsString += '<h5 post_id="' + id + '"><span>' + datetime + ': </span><p>' + message + '</p>' + edit + '</h5>';
+
+                    addPost(id, message, posts[post].mine, datetime);
+                    last_post_id = id;
                 }
-                if (posts.length > 0) last_post_id = posts[posts.length - 1].id
-                $('#posts').html(postsString);
             }
             if (result['status'] == 'error') {
                 $('#messages').html(result['message']);
