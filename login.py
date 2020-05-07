@@ -25,12 +25,15 @@ def login():
         if user is None or not user.check_password(form.password.data):
             return redirect(url_for('auth.login'))
 
-        token = jwt.encode({
-            'id': user.id,
-            'create_time': datetime.utcnow().timestamp()
-        }, SECRET_KEY, algorithm='HS256').decode()
-        user.login_token = token
-        db.session.commit()
+        if user.login_token is None:
+            token = jwt.encode({
+                'id': user.id,
+                'create_time': datetime.utcnow().timestamp()
+            }, SECRET_KEY, algorithm='HS256').decode()
+            user.login_token = token
+            db.session.commit()
+        else:
+            token = user.login_token
 
         resp = make_response(redirect(url_for('index')))
         resp.set_cookie('token', token)

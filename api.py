@@ -171,16 +171,21 @@ def login():
     if username is None:
         return jsonify(error.wrong_argument('username'))
     if password is None:
-        return jsonify(error. wrong_argument('password'))
+        return jsonify(error.wrong_argument('password'))
 
     user = User.query.filter(User.username == username).first()
-    if user is None or user.check_password(password):
+    if user is None or not user.check_password(password):
         return jsonify(error.wrong_login_data())
-    token = jwt.encode({
-        'id': user.id,
-        'create_time': datetime.utcnow().timestamp()
-    }, SECRET_KEY, algorithm='HS256')
-    return jsonify({ 'status': 'ok', 'token': token.decode() })
+    if user.login_token is None:
+        token = jwt.encode({
+            'id': user.id,
+            'create_time': datetime.utcnow().timestamp()
+        }, SECRET_KEY, algorithm='HS256').decode()
+        user.login_token = token
+        db.session.commit()
+    else:
+        token = user.login_token
+    return jsonify({ 'status': 'ok', 'token': token })
 
 @api.route('/logout/', methods=['GET', 'POST'])
 def logout():
