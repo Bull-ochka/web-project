@@ -34,15 +34,30 @@
     padding: 0px;
     outline:none;
 }
-.login-form a{
+.login-form a {
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  border-radius: 10px;
+  color: #fff;
+  transition: .15s ease-in-out;
+  font-size: 1em;
+  margin-top: 20px;
+}
+.login-form a:hover {
+  box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;
+  color: #fff;
+}
+/*.login-form a{
   display: inline-block;
   margin: 20px 0px;
   position: relative;
   border: 2px solid #f0f8ff;
   color: #fff;
   transition: .4s;
-}
-.login-form a:after{
+}*/
+
+/*.login-form a:after{
   content: "";
   position: absolute;
   top: 0;
@@ -60,8 +75,7 @@
   border-color: #fff;
   width: calc(100% - 10px);
   height: calc(100% + 18px);
-}
-
+}*/
 
 .login-button a {
   text-decoration: none;
