@@ -3,10 +3,10 @@
 {% block body %}
 
 
-    <h1>Доски:</h1>
+    <h3>Доски:</h3>
     <div class="list">
       {% for board in boards %}
-      <h3><a href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a></h3>
+      <h4><a href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a></h4>
       {% else %}
         Похоже, здесь нет ни одной доски!
       {% endfor %}

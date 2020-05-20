@@ -1,27 +1,30 @@
 .post-design h5{
     background: #4f4f4f;
-    opacity: 0.8;
-    color: #ffffff;
+    opacity: 0.95;
+    color: #fff;
     height: auto;
     width: 100%;
     border: 2px solid #3f3f3f;
+    text-decoration: none;
 }
 .post-design span{
-    color: #800000;
-    font-style: italic ;
+    color: 	#F5DEB3;
+    font-style: italic;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 .post-design p{
     /*style for messages*/
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 .thread-design p{
     background: #4f4f4f;
-    opacity: 0.8;
+    opacity: 0.9;
     height: auto;
     padding: 5px;
     width: 100%;
     border: 2px solid #3f3f3f;
 }
 .thread-design a{
-    color: #ffffff;
+    color: #fff;
 }

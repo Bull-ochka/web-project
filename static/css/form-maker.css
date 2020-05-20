@@ -2,26 +2,28 @@
     position: sticky;
     bottom: 7px;
     background-color:  #3f3f3f;
-    color: #ffffff;
+    color: #fff;
     padding: 5px;
     width: 100%;
     border: 3px solid #323232;/* Рамка вокруг слоя */
+    font-size: 1rem;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 #title {
     width: 100%;
     height: 35px;
     background-color: #4f4f4f;
-    color: #ffffff;
+    color: #fff;
 }
 textarea {
     width: 100%;
     height: 70px;
     background-color: #4f4f4f;
-    color: #ffffff;
+    color: #fff;
 }
 
 .form-maker input[type="submit" i], input[type="button" i] {
-    color: #ffffff;
+    color: #fff;
     background-color: transparent;
     align-items: flex-start;
     text-align: center;
@@ -31,14 +33,11 @@ textarea {
     border-width: 0px;
     border-style: none;
     border-image: none;
-    font-family: "Times New Roman", sans-serif;
     outline:none;
 }
 
 .form-maker label{
-    font-size: 1.25rem;
-    color: #ffffff;
-    font-family: "Times New Roman", sans-serif;
+    color: #fff;/*#f0f8ff;*/
 }
 
 .form-maker a{
@@ -48,9 +47,8 @@ textarea {
   padding: 10px 20px;
   margin: 5px 85%;
   border-radius: 10px;
-  font-weight: bold;
   letter-spacing: 2px;
-  color: white;
+  color: #fff;
   transition: .15s ease-in-out;
 }
 .form-maker a:hover {
@@ -59,4 +57,8 @@ textarea {
 }
 .form-maker p{
   margin-bottom: initial;
+}
+
+.thread-design input[type="button" i]{
+font-family: "Times New Roman", sans-serif;
 }

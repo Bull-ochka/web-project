@@ -7,7 +7,6 @@
   <div class="d-flex flex-column">
     <h1>Доски:</h1>
     {% for board in boards %}
-      <br>
       <h3><a href="{{ url_for('board', board_prefix=board.prefix) }}">{{ board.prefix }} - {{ board.name }}</a></h3>
     {% else %}
       Похоже, здесь нет ни одной доски!
