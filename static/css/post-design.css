@@ -16,7 +16,12 @@
     /*style for messages*/
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
-
+.post-design a{
+    margin: 10px 85%;
+    padding: 5px;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-style: italic;
+}
 .thread-design p{
     background: #4f4f4f;
     opacity: 0.9;

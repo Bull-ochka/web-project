@@ -25,7 +25,7 @@
       <!-- Сделать красиво -->
       <div class="login-button">
       {% if current_user.is_authenticated %}
-        {{ current_user.username }}
+        <a>{{ current_user.username }}</a>
         <a href="/logout">Выйти</a>
       {% else %}
         <a href="/login">Войти</a>
