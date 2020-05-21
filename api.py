@@ -118,13 +118,16 @@ def api_thread(board_prefix, thread_id):
         response['post_id'] = new_post.id
         return jsonify(response)
 
-    last_id = request.args.get('last_id')
-    if last_id is None:
-        last_id = '0'
+    last_time = request.args.get('last_time')
+    if last_time is None:
+        last_time = '0'
     # По факту сервер так и так ничего не отдаст, но грамотно говорить, где ошибка
-    if not last_id.isdigit():
-        return jsonify(error.wrong_argument('last_id'))
-    posts = thread.posts.filter(Post.id > last_id).all()
+    try:
+        last_time = float(last_time)
+    except:
+        return jsonify(error.wrong_argument('last_time'))
+    dt = datetime.fromtimestamp(last_time)
+    posts = thread.posts.filter(Post.datetime > dt).all()
 
     def set_mine_flag(post):
         obj = post.serialize
@@ -168,16 +171,21 @@ def login():
     if username is None:
         return jsonify(error.wrong_argument('username'))
     if password is None:
-        return jsonify(error. wrong_argument('password'))
+        return jsonify(error.wrong_argument('password'))
 
     user = User.query.filter(User.username == username).first()
-    if user is None or user.check_password(password):
+    if user is None or not user.check_password(password):
         return jsonify(error.wrong_login_data())
-    token = jwt.encode({
-        'id': user.id,
-        'create_time': datetime.utcnow().timestamp()
-    }, SECRET_KEY, algorithm='HS256')
-    return jsonify({ 'status': 'ok', 'token': token.decode() })
+    if user.login_token is None:
+        token = jwt.encode({
+            'id': user.id,
+            'create_time': datetime.utcnow().timestamp()
+        }, SECRET_KEY, algorithm='HS256').decode()
+        user.login_token = token
+        db.session.commit()
+    else:
+        token = user.login_token
+    return jsonify({ 'status': 'ok', 'token': token })
 
 @api.route('/logout/', methods=['GET', 'POST'])
 def logout():
