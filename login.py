@@ -19,7 +19,7 @@ class error:
 
 @auth.route('/login/', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    form = LogRegForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
@@ -43,7 +43,37 @@ def login():
 
 @auth.route('/register/', methods=['GET', 'POST'])
 def register():
-    pass
+    form = LogRegForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        if username is None:
+            return jsonify(error.wrong_argument('username'))
+        if password is None:
+            return jsonify(error.wrong_argument('password'))
+
+        user = User.query.filter(User.username == username).first()
+        if user in not None:
+            return redirect(url_for('auth.register'))
+
+        if current_user.is_authenticated:
+            current_user.login_token = None
+        user = User(username=username, password=password)
+        user.set_password(password)
+        token = jwt.encode({
+            'id': user.id,
+            'create_time': datetime.utcnow().timestamp()
+        }, SECRET_KEY, algorithm='HS256').decode()
+        user.login_token = token
+        db.session.add(user)
+        db.session.commit()
+
+        resp = make_response(redirect(url_for('index')))
+        resp.set_cookie('token', token)
+        return resp
+    
+    return render_template('register.html', form=form)
 
 @auth.route('/logout/', methods=['GET'])
 def logout():

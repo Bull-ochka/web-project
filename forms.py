@@ -10,6 +10,6 @@ class NewThreadForm(FlaskForm):
 class NewPostForm(FlaskForm):
     message = TextAreaField('Сообщение: ', validators=[DataRequired()])
 
-class LoginForm(FlaskForm):
+class LogRegForm(FlaskForm):
     username = StringField('Имя пользователя: ', validators=[DataRequired()])
     password = PasswordField('Пароль: ', validators=[DataRequired()])
