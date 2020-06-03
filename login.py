@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, make_response
 from flask_login import current_user, login_user, logout_user
 from datetime import datetime
 from models import *
-from forms import LoginForm
+from forms import LogRegForm
 from config import SECRET_KEY
 import jwt
 
@@ -54,7 +54,7 @@ def register():
             return jsonify(error.wrong_argument('password'))
 
         user = User.query.filter(User.username == username).first()
-        if user in not None:
+        if user is not None:
             return redirect(url_for('auth.register'))
 
         if current_user.is_authenticated:

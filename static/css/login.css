@@ -1,7 +1,7 @@
 .login-form {
     position: absolute; /* Абсолютное позиционирование */
     width: 300px; /* Ширина слоя в пикселах */
-    height: 250px; /* Высота слоя в пикселах */
+    height: 320px; /* Высота слоя в пикселах */
     left: 50%; /* Положение слоя от левого края */
     top: 50%; /* Положение слоя от верхнего края */
     margin-left: -150px; /* Отступ слева */
@@ -19,6 +19,7 @@
     text-align: center;
     cursor: pointer;
     box-sizing: border-box;
+    text-align: center;
 }
 .login-form input {
     width: 270px;
@@ -37,12 +38,14 @@
 .login-form a {
   text-decoration: none;
   outline: none;
-  display: inline-block;
+  display: block;
   border-radius: 10px;
   color: #fff;
   transition: .15s ease-in-out;
   font-size: 1em;
   margin-top: 20px;
+  text-align: center;
+  padding: 5px;
 }
 .login-form a:hover {
   box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;

@@ -3,12 +3,13 @@
 {% block title %} Sign In {% endblock %}
 
 {% block body %}
-<form class="login-form" method="post">
+<form class="login-form " method="post">
   {{ form.hidden_tag() }}
   {{ form.username.label }}<br>
   {{ form.username }} <br>
   {{ form.password.label }}<br>
   {{ form.password }}
   <p><a><input id="login" class="login-form-button" type="submit" value="Зарегестрироваться"></a></p>
+  <p><a href="/login">Войти</a></p>
 </form>
 {% endblock %}

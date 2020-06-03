@@ -203,7 +203,7 @@ def register():
         return jsonify(error.wrong_argument('password'))
 
     user = User.query.filter(User.username == username).first()
-    if user in not None:
+    if user is not None:
         return jsonify(error.username_busy())
 
     if current_user.is_authenticated:
