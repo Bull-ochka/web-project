@@ -48,34 +48,6 @@
   box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;
   color: #fff;
 }
-/*.login-form a{
-  display: inline-block;
-  margin: 20px 0px;
-  position: relative;
-  border: 2px solid #f0f8ff;
-  color: #fff;
-  transition: .4s;
-}*/
-
-/*.login-form a:after{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  border: 2px solid rgba(0,0,0,0);
-  transition: .4s;
-}
-.login-form a:hover:after{
-  content: inherit;
-  border-color: #fff;
-  width: calc(100% - 10px);
-  height: calc(100% + 18px);
-}*/
 
 .login-button a {
   text-decoration: none;
@@ -92,4 +64,15 @@
 .login-button a:hover {
   box-shadow: 0 0 10px 0 #2F4F4F inset, 0 0 10px 4px #2F4F4F;
   color: #fff;
+}
+
+@media screen and (max-width: 768px){
+.login-button {
+    text-align: center;
+}
+.login-button a {
+    padding: 0px 20px;
+    display: unset;
+}
+
 }

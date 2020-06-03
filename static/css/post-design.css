@@ -33,3 +33,9 @@
 .thread-design a{
     color: #fff;
 }
+
+@media screen and (max-width: 768px){
+.post-design a{
+margin: 10px 50%;
+}
+}

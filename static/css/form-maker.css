@@ -65,3 +65,15 @@ textarea {
 .thread-design input[type="button" i]{
 font-family: "Times New Roman", sans-serif;
 }
+
+@media screen and (max-width: 768px){
+.form-maker {
+bottom: 0px;
+}
+.form-maker a{
+margin: 5px 55%;
+}
+.thread-design{
+padding-right: 0px;
+}
+}

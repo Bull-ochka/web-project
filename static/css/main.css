@@ -45,3 +45,77 @@ body {
 .h5, h5{
     font-size: 1.15rem;
 }
+
+@media screen and (max-width: 768px){
+    body {
+    background-color: #2F4F4F;
+    background-image: url('/static/img/forest-back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #100000;
+    overflow-x: hidden;
+    font-family: "Times New Roman", sans-serif;
+    font-size: 1rem;
+}
+.list {
+    overflow-y: auto;
+    background: #4f4f4f;
+    margin-left: 0px;
+    color: #fff;
+    text-decoration: none;
+    box-sizing: unset;
+    min-height: fit-content;
+}
+.list a, a:hover{
+    color: #fff;
+    text-decoration: none;
+}
+.bg-dark {
+    background-color: #3f3f3f!important;
+    border: 2px solid #323232;
+    color: #fff;
+    height: 50px;
+    padding-top: 0rem;
+    display: inline-table;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 0rem;
+    margin-right: 0rem;
+    text-align: center;
+}
+.navbar{
+padding: 5px 0px 0px 0px;
+}
+.col-2{
+    min-width: 100%;
+    flex: unset;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.col{
+    padding-right: 0px;
+}
+.flex-column a{
+    color: #123456;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+.h1, h1{
+    margin-bottom: 0rem;
+    font-size: 1.3rem;
+}
+.h2, h2{
+    font-size: 1rem;
+}
+.h3, h3{
+    font-size: 1rem;
+    font-weight: 300;
+}
+.h4, h4{
+    font-size: 1rem;
+}
+.h5, h5{
+    font-size: 1rem;
+}
+}
