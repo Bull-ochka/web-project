@@ -39,6 +39,11 @@ class error:
             'status': 'error',
             'message': 'User hasn\'t enough permissions'
         }
+    def username_busy():
+        return {
+            'status': 'error',
+            'message': 'This username already taken'
+        }
     def unauthorized():
         return {
             'status': 'error',
@@ -186,6 +191,35 @@ def login():
     else:
         token = user.login_token
     return jsonify({ 'status': 'ok', 'token': token })
+
+@api.route('/register/', methods=['POST'])
+def register():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is None:
+        return jsonify(error.wrong_argument('username'))
+    if password is None:
+        return jsonify(error.wrong_argument('password'))
+
+    user = User.query.filter(User.username == username).first()
+    if user in not None:
+        return jsonify(error.username_busy())
+
+    if current_user.is_authenticated:
+        current_user.login_token = None
+    user = User(username=username, password=password)
+    user.set_password(password)
+    token = jwt.encode({
+        'id': user.id,
+        'create_time': datetime.utcnow().timestamp()
+    }, SECRET_KEY, algorithm='HS256').decode()
+    user.login_token = token
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify({ 'status': 'ok', 'token': token })
+
 
 @api.route('/logout/', methods=['GET', 'POST'])
 def logout():
