@@ -112,6 +112,7 @@ def api_thread(board_prefix, thread_id):
     if request.method == 'POST':
         user_id = None if not current_user.is_authenticated else current_user.id
         message = request.json.get('message')
+        print(message)
 
         if message is None:
             return jsonify(error.wrong_argument('message'))
@@ -208,14 +209,16 @@ def register():
 
     if current_user.is_authenticated:
         current_user.login_token = None
-    user = User(username=username, password=password)
+    user = User(username=username)
     user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+
     token = jwt.encode({
         'id': user.id,
         'create_time': datetime.utcnow().timestamp()
     }, SECRET_KEY, algorithm='HS256').decode()
     user.login_token = token
-    db.session.add(user)
     db.session.commit()
 
     return jsonify({ 'status': 'ok', 'token': token })

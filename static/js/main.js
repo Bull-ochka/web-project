@@ -18,12 +18,14 @@ var changeSendBtnFunction = function(isEdit, post_id) {
 var sendMsg = function() {
     // Даша, начни использовать jQuery, а не дефолтный JS
     var message = $('#threadmessage').val();
+    console.log(message);
 
     var empty = isWhitespace(message);
     if (empty) {
         alert('Не допускается ввод пустого сообщения');
         return false;
     }
+    console.log(edit);
     if (edit)  {
         editPost(edit_post_id, message);
         edit = false;
@@ -36,11 +38,11 @@ var sendMsg = function() {
 var addPost = function(post_id, message, bEdit, datetime) {
     var postString;
 
-    edit = '';
+    editBtn = '';
     if (bEdit) {
-        edit = '<a onclick="changeSendBtnFunction(true, ' + post_id + ')">Редактировать</a>';
+        editBtn = '<a onclick="changeSendBtnFunction(true, ' + post_id + ')">Редактировать</a>';
     }
-    postString = '<h5 post_id="' + post_id + '"><span>' + datetime + ': </span><p>' + message + '</p>' + edit + '</h5>';
+    postString = '<h5 post_id="' + post_id + '"><span>' + datetime + ': </span><p>' + message + '</p>' + editBtn + '</h5>';
 
     $('#posts').append(postString);
 }

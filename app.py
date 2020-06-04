@@ -30,7 +30,7 @@ def load_user_from_request(request):
     try:
         payload = jwt.decode(token, app.config.get('SECRET_KEY'))
         user = User.query.get(payload['id'])
-        if user.login_token == token:
+        if user is not None and user.login_token == token:
             return user
     except jwt.ExpiredSignatureError:
         pass

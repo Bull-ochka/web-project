@@ -59,20 +59,22 @@ def register():
 
         if current_user.is_authenticated:
             current_user.login_token = None
-        user = User(username=username, password=password)
+        user = User(username=username)
         user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+
         token = jwt.encode({
             'id': user.id,
             'create_time': datetime.utcnow().timestamp()
         }, SECRET_KEY, algorithm='HS256').decode()
         user.login_token = token
-        db.session.add(user)
         db.session.commit()
 
         resp = make_response(redirect(url_for('index')))
         resp.set_cookie('token', token)
         return resp
-    
+
     return render_template('register.html', form=form)
 
 @auth.route('/logout/', methods=['GET'])
